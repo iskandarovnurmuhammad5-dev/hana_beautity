@@ -1,9 +1,10 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useParams, useSearchParams, Link } from 'react-router-dom';
-import { api, API_BASE, captureInitData, getInitData, storeInitData } from '../lib/api';
+import { api, captureInitData, getInitData, storeInitData } from '../lib/api';
 import { useCart } from '../context/CartContext';
 import { useTelegram } from '../context/TelegramContext';
 import { t, formatPrice } from '../lib/translations';
+import { getImageUrl } from '../utils/getImageUrl';
 
 interface Product {
   _id: string;
@@ -39,11 +40,6 @@ interface Order {
   status: string;
   confirmedByAdmin: boolean;
   items: Array<{ productId: string }>;
-}
-
-function getImageUrl(img: string | undefined): string {
-  if (!img) return '';
-  return img.startsWith('/') ? `${API_BASE}${img}` : img;
 }
 
 export function ProductDetail() {

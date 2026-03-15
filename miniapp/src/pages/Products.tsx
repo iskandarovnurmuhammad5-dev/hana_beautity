@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { api, API_BASE } from '../lib/api';
+import { api } from '../lib/api';
+import { getImageUrl } from '../utils/getImageUrl';
 import { useCart } from '../context/CartContext';
 import { t, formatPrice } from '../lib/translations';
 import { StarRating } from '../components/StarRating';
@@ -30,12 +31,6 @@ interface ProductsResponse {
   page: number;
   limit: number;
   hasMore: boolean;
-}
-
-function getImageUrl(images: string[] | undefined): string {
-  const valid = images?.find((img) => img && (img.startsWith('/') || img.startsWith('http')));
-  if (!valid) return '';
-  return valid.startsWith('/') ? `${API_BASE}${valid}` : valid;
 }
 
 export function Products() {
@@ -183,9 +178,9 @@ export function Products() {
                   className="block flex-1"
                 >
                   <div className="aspect-square bg-gray-100">
-                    {getImageUrl(product.images) ? (
+                    {getImageUrl(product.images?.[0]) ? (
                       <img
-                        src={getImageUrl(product.images)}
+                        src={getImageUrl(product.images?.[0])}
                         alt={product.name}
                         className="w-full h-full object-cover"
                       />

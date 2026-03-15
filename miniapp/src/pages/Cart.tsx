@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { api, API_BASE, getInitData, captureInitData } from '../lib/api';
+import { api, getInitData, captureInitData } from '../lib/api';
+import { getImageUrl } from '../utils/getImageUrl';
 import { useCart } from '../context/CartContext';
 import { useTelegram } from '../context/TelegramContext';
 import { t, formatPrice } from '../lib/translations';
@@ -240,9 +241,9 @@ export function Cart() {
             className="bg-white rounded-xl shadow-sm overflow-hidden flex gap-4 p-4"
           >
             <div className="w-20 h-20 flex-shrink-0 bg-gray-100 rounded-lg overflow-hidden">
-              {item.image ? (
+              {getImageUrl(item.image) ? (
                 <img
-                  src={item.image.startsWith('/') ? `${API_BASE}${item.image}` : item.image}
+                  src={getImageUrl(item.image)}
                   alt={item.name}
                   className="w-full h-full object-cover"
                 />
